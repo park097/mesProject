@@ -39,6 +39,7 @@ Spring Boot + React 기반 Mini MES를 온프레미스(Ubuntu + Nginx + MySQL) �
 - API 명세 초안: `docs/API_SPEC.md`
 - 배포 가이드: `docs/DEPLOY_ONPREM_UBUNTU.md`
 - 장애 대응 가이드: `docs/INCIDENT_RESPONSE.md`
+- 프론트 초기 세팅 가이드: `docs/FRONTEND_TS_REACT_SETUP.md`
 
 ## 6) 권장 저장소 구조
 ```text
