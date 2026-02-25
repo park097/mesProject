@@ -3,9 +3,21 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { DRAWER_WIDTH } from "./Layout";
+import { clearAuthSession, getAuthUser } from "../auth/authStorage";
 
 const TopBar = () => {
+  const navigate = useNavigate();
+  const user = useMemo(() => getAuthUser(), []);
+
+  const onLogout = () => {
+    clearAuthSession();
+    navigate("/login", { replace: true });
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -50,9 +62,14 @@ const TopBar = () => {
               <NotificationsNoneOutlinedIcon fontSize="small" />
             </Badge>
           </IconButton>
-          <Avatar sx={{ width: 30, height: 30 }}>A</Avatar>
+          <IconButton size="small" onClick={onLogout} aria-label="logout">
+            <LogoutOutlinedIcon fontSize="small" />
+          </IconButton>
+          <Avatar sx={{ width: 30, height: 30 }}>
+            {user?.username?.slice(0, 1).toUpperCase() ?? "U"}
+          </Avatar>
           <Typography variant="body2" color="text.secondary">
-            Admin
+            {user?.username ?? "Unknown"}
           </Typography>
         </Box>
       </Toolbar>
