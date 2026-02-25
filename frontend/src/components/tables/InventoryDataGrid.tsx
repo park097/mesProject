@@ -1,6 +1,6 @@
 import { Chip, Paper, Typography } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { TableRow } from "../../data/mockData";
+import { TableRow } from "../../types/table";
 
 type InventoryDataGridProps = {
   title: string;

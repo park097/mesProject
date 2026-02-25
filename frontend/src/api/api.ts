@@ -23,6 +23,9 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       clearAuthSession();
+      if (typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
+        window.location.href = "/login";
+      }
     }
     return Promise.reject(error);
   }
