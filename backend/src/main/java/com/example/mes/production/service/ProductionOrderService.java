@@ -11,6 +11,7 @@ import com.example.mes.user.domain.User;
 import com.example.mes.user.domain.UserRole;
 import com.example.mes.user.repository.UserRepository;
 import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,15 +22,18 @@ public class ProductionOrderService {
     private final ProductionOrderRepository productionOrderRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public ProductionOrderService(
             ProductionOrderRepository productionOrderRepository,
             ItemRepository itemRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder
     ) {
         this.productionOrderRepository = productionOrderRepository;
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<ProductionOrderResponse> getAll() {
@@ -104,6 +108,8 @@ public class ProductionOrderService {
 
     private User getOrCreateSystemUser() {
         return userRepository.findByUsername("system")
-                .orElseGet(() -> userRepository.save(new User("system", "{noop}system", UserRole.ADMIN)));
+                .orElseGet(() -> userRepository.save(
+                        new User("system", passwordEncoder.encode("system1234"), UserRole.ADMIN)
+                ));
     }
 }

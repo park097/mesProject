@@ -21,6 +21,9 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
+    @Column(name = "password", nullable = false, length = 255)
+    private String password;
+
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
@@ -33,6 +36,7 @@ public class User extends BaseTimeEntity {
 
     public User(String username, String passwordHash, UserRole role) {
         this.username = username;
+        this.password = passwordHash;
         this.passwordHash = passwordHash;
         this.role = role;
     }
