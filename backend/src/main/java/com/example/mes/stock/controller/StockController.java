@@ -2,6 +2,7 @@ package com.example.mes.stock.controller;
 
 import com.example.mes.stock.dto.CurrentStockResponse;
 import com.example.mes.stock.dto.StockRequest;
+import com.example.mes.stock.dto.StockTodaySummaryResponse;
 import com.example.mes.stock.dto.StockTransactionResponse;
 import com.example.mes.stock.service.StockService;
 import jakarta.validation.Valid;
@@ -46,5 +47,10 @@ public class StockController {
     @GetMapping("/{itemId}/history")
     public List<StockTransactionResponse> getHistory(@PathVariable Long itemId) {
         return stockService.getRecentHistory(itemId);
+    }
+
+    @GetMapping("/summary/today")
+    public StockTodaySummaryResponse getTodaySummary() {
+        return stockService.getTodaySummary();
     }
 }

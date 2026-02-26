@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CircularProgress,
+  Divider,
   MenuItem,
   Stack,
   TextField,
@@ -13,10 +14,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { type ItemResponse, getItems } from "../api/itemApi";
-import { getCurrentStockByItem, stockIn, stockOut } from "../api/stockApi";
+import { getCurrentStockByItem, getStockHistoryByItem, stockIn, stockOut, type StockTransactionResponse } from "../api/stockApi";
 import InventoryDataGrid from "../components/tables/InventoryDataGrid";
 import type { TableRow } from "../types/table";
 import { mapCurrentStockToTableRow } from "../utils/tableMapper";
+import { formatDateTime } from "../utils/date";
 
 export default function StockPage() {
   const [items, setItems] = useState<ItemResponse[]>([]);
@@ -28,14 +30,29 @@ export default function StockPage() {
   const [quantity, setQuantity] = useState<string>("1");
   const [memo, setMemo] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [history, setHistory] = useState<StockTransactionResponse[]>([]);
+
+  const loadHistory = async (itemId: number) => {
+    const rows = await getStockHistoryByItem(itemId);
+    setHistory(rows);
+  };
 
   const loadStocks = async () => {
     const itemList = await getItems();
     const currentStocks = await Promise.all(itemList.map((item) => getCurrentStockByItem(item.id)));
     setItems(itemList);
     setRows(currentStocks.map(mapCurrentStockToTableRow));
-    if (!selectedItemId && itemList.length > 0) {
-      setSelectedItemId(String(itemList[0].id));
+    if (itemList.length === 0) {
+      setSelectedItemId("");
+      setHistory([]);
+      return;
+    }
+
+    const hasSelected = itemList.some((item) => String(item.id) === selectedItemId);
+    const nextSelectedId = hasSelected ? selectedItemId : String(itemList[0].id);
+    setSelectedItemId(nextSelectedId);
+    if (nextSelectedId) {
+      await loadHistory(Number(nextSelectedId));
     }
   };
 
@@ -83,6 +100,7 @@ export default function StockPage() {
         await stockOut(payload);
       }
       await loadStocks();
+      await loadHistory(itemId);
       setSuccessMessage(type === "IN" ? "입고가 등록되었습니다." : "출고가 등록되었습니다.");
       setMemo("");
       setQuantity("1");
@@ -112,7 +130,13 @@ export default function StockPage() {
               select
               label="품목"
               value={selectedItemId}
-              onChange={(event) => setSelectedItemId(event.target.value)}
+              onChange={(event) => {
+                const id = event.target.value;
+                setSelectedItemId(id);
+                if (id) {
+                  void loadHistory(Number(id));
+                }
+              }}
               sx={{ minWidth: 220 }}
               size="small"
             >
@@ -157,6 +181,31 @@ export default function StockPage() {
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       {successMessage && <Alert severity="success">{successMessage}</Alert>}
       {isLoading ? <CircularProgress /> : <InventoryDataGrid title="재고 현황" rows={rows} />}
+      <Card variant="outlined">
+        <CardContent>
+          <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
+            최근 입출고 이력
+          </Typography>
+          {history.length === 0 ? (
+            <Typography variant="body2" color="text.secondary">
+              선택한 품목의 입출고 이력이 없습니다.
+            </Typography>
+          ) : (
+            <Stack divider={<Divider flexItem />}>
+              {history.map((row) => (
+                <Box key={row.id} sx={{ py: 1.2 }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                    {row.type === "IN" ? "입고" : "출고"} {row.quantity} {row.itemName} ({row.itemCode})
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {formatDateTime(row.createdAt)} / {row.createdBy} / {row.memo || "-"}
+                  </Typography>
+                </Box>
+              ))}
+            </Stack>
+          )}
+        </CardContent>
+      </Card>
     </Stack>
   );
 }

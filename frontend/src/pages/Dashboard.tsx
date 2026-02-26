@@ -2,7 +2,7 @@ import { Alert, CircularProgress, Grid, Paper, Stack, Typography } from "@mui/ma
 import { useEffect, useMemo, useState } from "react";
 import { getItems } from "../api/itemApi";
 import { getProductionOrders } from "../api/productionApi";
-import { getCurrentStockByItem } from "../api/stockApi";
+import { getCurrentStockByItem, getStockTodaySummary } from "../api/stockApi";
 import KpiCard from "../components/cards/KpiCard";
 import InventoryDataGrid from "../components/tables/InventoryDataGrid";
 import type { KpiItem, TableRow } from "../types/table";
@@ -18,6 +18,10 @@ export default function Dashboard() {
   const [delayCount, setDelayCount] = useState(0);
   const [totalStockQty, setTotalStockQty] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
+  const [todayInQty, setTodayInQty] = useState(0);
+  const [todayOutQty, setTodayOutQty] = useState(0);
+  const [todayInCount, setTodayInCount] = useState(0);
+  const [todayOutCount, setTodayOutCount] = useState(0);
 
   useEffect(() => {
     const load = async () => {
@@ -52,6 +56,19 @@ export default function Dashboard() {
         setTotalStockQty(totalQty);
         setDoneCount(done.length);
         setDelayCount(delayed.length);
+
+        try {
+          const todaySummary = await getStockTodaySummary();
+          setTodayInQty(todaySummary.inQty);
+          setTodayOutQty(todaySummary.outQty);
+          setTodayInCount(todaySummary.inCount);
+          setTodayOutCount(todaySummary.outCount);
+        } catch {
+          setTodayInQty(0);
+          setTodayOutQty(0);
+          setTodayInCount(0);
+          setTodayOutCount(0);
+        }
       } catch {
         setErrorMessage("대시보드 데이터를 불러오지 못했습니다.");
       } finally {
@@ -66,10 +83,10 @@ export default function Dashboard() {
     () => [
       { title: "총 품목 수", value: totalItemCount.toString(), delta: "+0.0%" },
       { title: "총 재고 수량", value: totalStockQty.toLocaleString(), delta: "+0.0%" },
-      { title: "안전재고 미만", value: stockLowCount.toString(), delta: "+0.0%" },
-      { title: "재고 소진 품목", value: stockOutCount.toString(), delta: "+0.0%" },
+      { title: "오늘 입고 수량", value: todayInQty.toLocaleString(), delta: `${todayInCount}건` },
+      { title: "오늘 출고 수량", value: todayOutQty.toLocaleString(), delta: `${todayOutCount}건` },
     ],
-    [stockLowCount, stockOutCount, totalItemCount, totalStockQty]
+    [todayInCount, todayInQty, todayOutCount, todayOutQty, totalItemCount, totalStockQty]
   );
 
   return (
@@ -105,6 +122,9 @@ export default function Dashboard() {
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 안전재고 미만 품목: {stockLowCount}건
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                재고 소진 품목: {stockOutCount}건
               </Typography>
             </Stack>
           </Paper>

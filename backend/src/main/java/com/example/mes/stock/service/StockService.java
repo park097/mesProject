@@ -6,10 +6,13 @@ import com.example.mes.stock.domain.StockHistory;
 import com.example.mes.stock.domain.StockType;
 import com.example.mes.stock.dto.CurrentStockResponse;
 import com.example.mes.stock.dto.StockRequest;
+import com.example.mes.stock.dto.StockTodaySummaryResponse;
 import com.example.mes.stock.dto.StockTransactionResponse;
 import com.example.mes.stock.repository.StockHistoryRepository;
 import com.example.mes.user.domain.User;
 import com.example.mes.user.repository.UserRepository;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +60,18 @@ public class StockService {
         return stockHistoryRepository.findTop20ByItemIdOrderByCreatedAtDesc(itemId).stream()
                 .map(StockTransactionResponse::from)
                 .toList();
+    }
+
+    public StockTodaySummaryResponse getTodaySummary() {
+        LocalDateTime from = LocalDate.now().atStartOfDay();
+        LocalDateTime to = from.plusDays(1);
+
+        Integer inQty = stockHistoryRepository.sumQuantityByTypeAndPeriod(StockType.IN, from, to);
+        Integer outQty = stockHistoryRepository.sumQuantityByTypeAndPeriod(StockType.OUT, from, to);
+        long inCount = stockHistoryRepository.countByTypeAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(StockType.IN, from, to);
+        long outCount = stockHistoryRepository.countByTypeAndCreatedAtGreaterThanEqualAndCreatedAtLessThan(StockType.OUT, from, to);
+
+        return StockTodaySummaryResponse.of(inQty, outQty, inCount, outCount);
     }
 
     private StockTransactionResponse saveHistory(StockRequest request, String username, StockType type) {

@@ -27,6 +27,13 @@ export interface StockRequest {
   memo?: string;
 }
 
+export interface StockTodaySummaryResponse {
+  inQty: number;
+  outQty: number;
+  inCount: number;
+  outCount: number;
+}
+
 export const getCurrentStockByItem = async (itemId: number): Promise<CurrentStockResponse> => {
   const { data } = await api.get<CurrentStockResponse>(`/stocks/${itemId}/current`);
   return data;
@@ -44,5 +51,10 @@ export const stockIn = async (payload: StockRequest): Promise<StockTransactionRe
 
 export const stockOut = async (payload: StockRequest): Promise<StockTransactionResponse> => {
   const { data } = await api.post<StockTransactionResponse>("/stocks/out", payload);
+  return data;
+};
+
+export const getStockTodaySummary = async (): Promise<StockTodaySummaryResponse> => {
+  const { data } = await api.get<StockTodaySummaryResponse>("/stocks/summary/today");
   return data;
 };

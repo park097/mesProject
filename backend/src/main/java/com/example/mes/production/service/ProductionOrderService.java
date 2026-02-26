@@ -7,6 +7,9 @@ import com.example.mes.production.domain.ProductionStatus;
 import com.example.mes.production.dto.ProductionOrderRequest;
 import com.example.mes.production.dto.ProductionOrderResponse;
 import com.example.mes.production.repository.ProductionOrderRepository;
+import com.example.mes.stock.domain.StockHistory;
+import com.example.mes.stock.domain.StockType;
+import com.example.mes.stock.repository.StockHistoryRepository;
 import com.example.mes.user.domain.User;
 import com.example.mes.user.domain.UserRole;
 import com.example.mes.user.repository.UserRepository;
@@ -21,17 +24,20 @@ public class ProductionOrderService {
 
     private final ProductionOrderRepository productionOrderRepository;
     private final ItemRepository itemRepository;
+    private final StockHistoryRepository stockHistoryRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     public ProductionOrderService(
             ProductionOrderRepository productionOrderRepository,
             ItemRepository itemRepository,
+            StockHistoryRepository stockHistoryRepository,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder
     ) {
         this.productionOrderRepository = productionOrderRepository;
         this.itemRepository = itemRepository;
+        this.stockHistoryRepository = stockHistoryRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -73,8 +79,11 @@ public class ProductionOrderService {
     }
 
     @Transactional
-    public ProductionOrderResponse update(Long id, ProductionOrderRequest request) {
+    public ProductionOrderResponse update(Long id, ProductionOrderRequest request, String username) {
         ProductionOrder order = findOrder(id);
+        if (order.getStatus() == ProductionStatus.DONE) {
+            throw new IllegalArgumentException("completed order cannot be updated");
+        }
 
         Item item = itemRepository.findById(request.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("item not found: " + request.getItemId()));
@@ -86,12 +95,37 @@ public class ProductionOrderService {
             throw new IllegalArgumentException("orderNo cannot be changed");
         }
 
+        Integer nextProducedQty = request.getProducedQty() == null ? order.getProducedQty() : request.getProducedQty();
+        ProductionStatus nextStatus = request.getStatus() == null ? order.getStatus() : request.getStatus();
+
+        if (nextProducedQty < order.getProducedQty()) {
+            throw new IllegalArgumentException("producedQty cannot be decreased");
+        }
+
+        if (nextStatus == ProductionStatus.DONE && nextProducedQty <= 0) {
+            throw new IllegalArgumentException("producedQty must be greater than 0 when status is DONE");
+        }
+
         order.update(
                 request.getPlannedQty(),
-                request.getProducedQty() == null ? order.getProducedQty() : request.getProducedQty(),
-                request.getStatus() == null ? order.getStatus() : request.getStatus(),
+                nextProducedQty,
+                nextStatus,
                 request.getDueDate()
         );
+
+        if (nextStatus == ProductionStatus.DONE) {
+            User user = findUser(username);
+            stockHistoryRepository.save(
+                    new StockHistory(
+                            order.getItem(),
+                            StockType.IN,
+                            nextProducedQty,
+                            "production done: " + order.getOrderNo(),
+                            user
+                    )
+            );
+        }
+
         return ProductionOrderResponse.from(order);
     }
 
@@ -111,5 +145,10 @@ public class ProductionOrderService {
                 .orElseGet(() -> userRepository.save(
                         new User("system", passwordEncoder.encode("system1234"), UserRole.ADMIN)
                 ));
+    }
+
+    private User findUser(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("user not found: " + username));
     }
 }

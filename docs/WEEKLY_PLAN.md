@@ -4,11 +4,11 @@
 목표: 도메인/테이블/CRUD API 골격 완성
 
 체크리스트:
-- [ ] ERD 설계 완료 (`User`, `Item`, `StockHistory`, `ProductionOrder`)
-- [ ] Spring Boot 프로젝트 생성
-- [ ] Entity/Repository/Service/Controller 분리
-- [ ] Item/ProductionOrder CRUD API 구현
-- [ ] MySQL 연동(`application.yml`) 및 JPA 동작 확인
+- [x] ERD 설계 완료 (`User`, `Item`, `StockHistory`, `ProductionOrder`)
+- [x] Spring Boot 프로젝트 생성
+- [x] Entity/Repository/Service/Controller 분리
+- [x] Item/ProductionOrder CRUD API 구현
+- [x] MySQL 연동(`application.yml`) 및 JPA 동작 확인
 
 완료 기준:
 - Postman에서 기본 CRUD 성공
@@ -18,11 +18,11 @@
 목표: 로그인/인가 및 재고 흐름 구현
 
 체크리스트:
-- [ ] Spring Security + JWT 로그인 구현
-- [ ] 비밀번호 BCrypt 암호화
-- [ ] `ADMIN` / `USER` 권한 분리
-- [ ] 입고(`IN`) / 출고(`OUT`) API 구현
-- [ ] StockHistory 기반 현재고 계산 API 구현
+- [x] Spring Security + JWT 로그인 구현
+- [x] 비밀번호 BCrypt 암호화
+- [x] `ADMIN` / `USER` 권한 분리
+- [x] 입고(`IN`) / 출고(`OUT`) API 구현
+- [x] StockHistory 기반 현재고 계산 API 구현
 - [ ] Postman 인증 포함 통합 테스트 완료
 
 완료 기준:
@@ -33,13 +33,13 @@
 목표: 업무형 UI 완성 + 백엔드 API 연동
 
 체크리스트:
-- [ ] 로그인 화면 구현
-- [ ] 레이아웃 구현(TopBar/Sidebar/Main)
-- [ ] 대시보드 카드 + 최근 내역 테이블
-- [ ] 품목 관리(목록/등록/수정/삭제)
-- [ ] 재고 관리(품목 선택, 입고/출고, 현재고 표시)
-- [ ] 생산 관리(작업지시/완료/이력)
-- [ ] Axios 인터셉터(JWT) 적용
+- [x] 로그인 화면 구현
+- [x] 레이아웃 구현(TopBar/Sidebar/Main)
+- [x] 대시보드 카드 + 최근 내역 테이블
+- [x] 품목 관리(목록/등록/수정/삭제)
+- [x] 재고 관리(품목 선택, 입고/출고, 현재고 표시)
+- [x] 생산 관리(작업지시/완료/이력)
+- [x] Axios 인터셉터(JWT) 적용
 
 완료 기준:
 - 주요 업무 플로우(로그인 -> 품목 -> 재고 -> 생산) 브라우저에서 정상 수행

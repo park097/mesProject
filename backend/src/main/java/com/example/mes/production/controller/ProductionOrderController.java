@@ -4,6 +4,7 @@ import com.example.mes.production.dto.ProductionOrderRequest;
 import com.example.mes.production.dto.ProductionOrderResponse;
 import com.example.mes.production.service.ProductionOrderService;
 import jakarta.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,8 +44,12 @@ public class ProductionOrderController {
     }
 
     @PutMapping("/{id}")
-    public ProductionOrderResponse updateOrder(@PathVariable Long id, @Valid @RequestBody ProductionOrderRequest request) {
-        return productionOrderService.update(id, request);
+    public ProductionOrderResponse updateOrder(
+            @PathVariable Long id,
+            @Valid @RequestBody ProductionOrderRequest request,
+            Principal principal
+    ) {
+        return productionOrderService.update(id, request, principal.getName());
     }
 
     @DeleteMapping("/{id}")
