@@ -1,11 +1,11 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/mini_mes?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: mes@1234
+    url: jdbc:mysql://localhost:3306/mesdb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: mes
+    password: Mes1234!
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

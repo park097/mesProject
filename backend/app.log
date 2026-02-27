@@ -1,0 +1,1817 @@
+nohup: ignoring input
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.6)
+
+2026-02-27T07:15:14.526Z  INFO 3379 --- [           main] com.example.mes.MesApplication           : Starting MesApplication v0.0.1-SNAPSHOT using Java 17.0.18 with PID 3379 (/home/onpren/mesProject/backend/target/mes-0.0.1-SNAPSHOT.jar started by onpren in /home/onpren/mesProject/backend)
+2026-02-27T07:15:14.543Z  INFO 3379 --- [           main] com.example.mes.MesApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-02-27T07:15:16.185Z  INFO 3379 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-27T07:15:16.286Z  INFO 3379 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 91 ms. Found 4 JPA repository interfaces.
+2026-02-27T07:15:17.029Z  INFO 3379 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-27T07:15:17.047Z  INFO 3379 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-27T07:15:17.047Z  INFO 3379 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.46]
+2026-02-27T07:15:17.081Z  INFO 3379 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-27T07:15:17.082Z  INFO 3379 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2324 ms
+2026-02-27T07:15:17.280Z  INFO 3379 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-27T07:15:17.387Z  INFO 3379 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.29.Final
+2026-02-27T07:15:17.431Z  INFO 3379 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-27T07:15:17.821Z  INFO 3379 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-27T07:15:17.868Z  INFO 3379 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-27T07:15:18.517Z  INFO 3379 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9f2376f
+2026-02-27T07:15:18.521Z  INFO 3379 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-27T07:15:18.636Z  INFO 3379 --- [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.45
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-02-27T07:15:20.127Z  INFO 3379 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-27T07:15:20.194Z DEBUG 3379 --- [           main] org.hibernate.SQL                        : 
+    alter table production_orders 
+       modify column status enum ('CREATED','DONE','IN_PROGRESS') not null
+Hibernate: 
+    alter table production_orders 
+       modify column status enum ('CREATED','DONE','IN_PROGRESS') not null
+2026-02-27T07:15:20.243Z DEBUG 3379 --- [           main] org.hibernate.SQL                        : 
+    alter table stock_history 
+       modify column type enum ('IN','OUT') not null
+Hibernate: 
+    alter table stock_history 
+       modify column type enum ('IN','OUT') not null
+2026-02-27T07:15:20.270Z DEBUG 3379 --- [           main] org.hibernate.SQL                        : 
+    alter table users 
+       modify column role enum ('ADMIN','USER') not null
+Hibernate: 
+    alter table users 
+       modify column role enum ('ADMIN','USER') not null
+2026-02-27T07:15:20.358Z  INFO 3379 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-27T07:15:21.146Z  INFO 3379 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-02-27T07:15:21.296Z  INFO 3379 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-27T07:15:23.327Z  WARN 3379 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-27T07:15:24.215Z  INFO 3379 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-02-27T07:15:24.246Z  INFO 3379 --- [           main] com.example.mes.MesApplication           : Started MesApplication in 10.728 seconds (process running for 11.5)
+2026-02-27T07:15:24.371Z DEBUG 3379 --- [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:15:24.424Z DEBUG 3379 --- [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:15:24.436Z DEBUG 3379 --- [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:16:06.495Z  INFO 3379 --- [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-27T07:16:06.496Z  INFO 3379 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-27T07:16:06.498Z  INFO 3379 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-02-27T07:17:54.811Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:17:54.920Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:19:41.709Z DEBUG 3379 --- [nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:19:41.801Z DEBUG 3379 --- [nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:19:41.982Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:19:41.986Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:19:42.013Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+2026-02-27T07:19:42.025Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        po1_0.id,
+        po1_0.created_at,
+        po1_0.created_by,
+        po1_0.due_date,
+        po1_0.item_id,
+        po1_0.order_no,
+        po1_0.planned_qty,
+        po1_0.produced_qty,
+        po1_0.status,
+        po1_0.updated_at 
+    from
+        production_orders po1_0
+Hibernate: 
+    select
+        po1_0.id,
+        po1_0.created_at,
+        po1_0.created_by,
+        po1_0.due_date,
+        po1_0.item_id,
+        po1_0.order_no,
+        po1_0.planned_qty,
+        po1_0.produced_qty,
+        po1_0.status,
+        po1_0.updated_at 
+    from
+        production_orders po1_0
+2026-02-27T07:19:42.076Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T07:19:42.125Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T07:19:42.152Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T07:19:42.159Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T07:19:42.169Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T09:44:02.590Z DEBUG 3379 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T09:44:03.485Z DEBUG 3379 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T09:44:06.690Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T09:44:06.694Z DEBUG 3379 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T09:44:06.832Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+2026-02-27T09:44:06.952Z DEBUG 3379 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        po1_0.id,
+        po1_0.created_at,
+        po1_0.created_by,
+        po1_0.due_date,
+        po1_0.item_id,
+        po1_0.order_no,
+        po1_0.planned_qty,
+        po1_0.produced_qty,
+        po1_0.status,
+        po1_0.updated_at 
+    from
+        production_orders po1_0
+Hibernate: 
+    select
+        po1_0.id,
+        po1_0.created_at,
+        po1_0.created_by,
+        po1_0.due_date,
+        po1_0.item_id,
+        po1_0.order_no,
+        po1_0.planned_qty,
+        po1_0.produced_qty,
+        po1_0.status,
+        po1_0.updated_at 
+    from
+        production_orders po1_0
+2026-02-27T09:44:07.288Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T09:44:07.353Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T09:44:07.414Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        coalesce(sum(sh1_0.quantity), 0) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T09:44:07.445Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T09:44:07.452Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+Hibernate: 
+    select
+        count(sh1_0.id) 
+    from
+        stock_history sh1_0 
+    where
+        sh1_0.type=? 
+        and sh1_0.created_at>=? 
+        and sh1_0.created_at<?
+2026-02-27T09:44:19.352Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T09:44:19.385Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+2026-02-27T10:03:58.059Z DEBUG 3379 --- [nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:03:58.094Z DEBUG 3379 --- [nio-8080-exec-3] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+2026-02-27T10:04:04.738Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:04.792Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+2026-02-27T10:04:04.940Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:04.940Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:04.967Z DEBUG 3379 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:04.999Z DEBUG 3379 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:05.001Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:05.014Z DEBUG 3379 --- [nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:05.676Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:05.677Z DEBUG 3379 --- [nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:05.677Z DEBUG 3379 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:05.678Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:05.679Z DEBUG 3379 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:05.680Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:06.199Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.199Z DEBUG 3379 --- [io-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.200Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.201Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.202Z DEBUG 3379 --- [nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.203Z DEBUG 3379 --- [nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.347Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:06.350Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:06.351Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:06.375Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:06.395Z DEBUG 3379 --- [nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.397Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:06.414Z DEBUG 3379 --- [nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.416Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:06.423Z DEBUG 3379 --- [nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+Hibernate: 
+    select
+        coalesce(sum(case 
+            when sh1_0.type='IN' 
+                then sh1_0.quantity 
+            else -sh1_0.quantity 
+    end), 0) 
+from
+    stock_history sh1_0 
+where
+    sh1_0.item_id=?
+2026-02-27T10:04:06.446Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:06.456Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:06.642Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        sh1_0.id,
+        sh1_0.created_at,
+        sh1_0.created_by,
+        sh1_0.item_id,
+        sh1_0.memo,
+        sh1_0.quantity,
+        sh1_0.type,
+        sh1_0.updated_at 
+    from
+        stock_history sh1_0 
+    left join
+        items i1_0 
+            on i1_0.id=sh1_0.item_id 
+    where
+        i1_0.id=? 
+    order by
+        sh1_0.created_at desc 
+    limit
+        ?
+Hibernate: 
+    select
+        sh1_0.id,
+        sh1_0.created_at,
+        sh1_0.created_by,
+        sh1_0.item_id,
+        sh1_0.memo,
+        sh1_0.quantity,
+        sh1_0.type,
+        sh1_0.updated_at 
+    from
+        stock_history sh1_0 
+    left join
+        items i1_0 
+            on i1_0.id=sh1_0.item_id 
+    where
+        i1_0.id=? 
+    order by
+        sh1_0.created_at desc 
+    limit
+        ?
+2026-02-27T10:04:06.764Z DEBUG 3379 --- [nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.id=?
+2026-02-27T10:04:10.246Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:10.255Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.password,
+        u1_0.password_hash,
+        u1_0.role,
+        u1_0.updated_at,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-02-27T10:04:10.266Z DEBUG 3379 --- [nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0
+2026-02-27T10:04:10.277Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        po1_0.id,
+        po1_0.created_at,
+        po1_0.created_by,
+        po1_0.due_date,
+        po1_0.item_id,
+        po1_0.order_no,
+        po1_0.planned_qty,
+        po1_0.produced_qty,
+        po1_0.status,
+        po1_0.updated_at 
+    from
+        production_orders po1_0
+Hibernate: 
+    select
+        po1_0.id,
+        po1_0.created_at,
+        po1_0.created_by,
+        po1_0.due_date,
+        po1_0.item_id,
+        po1_0.order_no,
+        po1_0.planned_qty,
+        po1_0.produced_qty,
+        po1_0.status,
+        po1_0.updated_at 
+    from
+        production_orders po1_0
+2026-02-27T10:04:10.301Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+2026-02-27T10:04:10.304Z DEBUG 3379 --- [nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
+Hibernate: 
+    select
+        i1_0.id,
+        i1_0.active,
+        i1_0.created_at,
+        i1_0.item_code,
+        i1_0.item_name,
+        i1_0.safety_stock,
+        i1_0.unit,
+        i1_0.updated_at 
+    from
+        items i1_0 
+    where
+        i1_0.id=?
