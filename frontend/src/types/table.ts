@@ -8,10 +8,11 @@ export type TableRow = {
   qty: number;
   status: RowStatus;
   updatedAt: string;
+  [key: string]: string | number | RowStatus;
 };
 
 export type KpiItem = {
   title: string;
   value: string;
-  delta: string;
+  hint: string;
 };

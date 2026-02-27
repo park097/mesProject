@@ -12,13 +12,32 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { GridColDef } from "@mui/x-data-grid";
+import { useEffect, useMemo, useState } from "react";
 import { type ItemResponse, getItems } from "../api/itemApi";
-import { getCurrentStockByItem, getStockHistoryByItem, stockIn, stockOut, type StockTransactionResponse } from "../api/stockApi";
+import {
+  getCurrentStockByItem,
+  getStockHistoryByItem,
+  stockIn,
+  stockOut,
+  type StockTransactionResponse,
+} from "../api/stockApi";
 import InventoryDataGrid from "../components/tables/InventoryDataGrid";
 import type { TableRow } from "../types/table";
-import { mapCurrentStockToTableRow } from "../utils/tableMapper";
 import { formatDateTime } from "../utils/date";
+import { toStockStatus } from "../utils/tableMapper";
+
+const columns: GridColDef<TableRow>[] = [
+  { field: "itemCode", headerName: "Part Code", minWidth: 120, flex: 1 },
+  { field: "itemName", headerName: "Part Name", minWidth: 170, flex: 1.3 },
+  { field: "category", headerName: "Unit", minWidth: 80, flex: 0.6 },
+  { field: "qty", headerName: "Current", type: "number", minWidth: 90, flex: 0.8 },
+  { field: "safetyStock", headerName: "Safety", type: "number", minWidth: 90, flex: 0.8 },
+  { field: "gap", headerName: "Gap", type: "number", minWidth: 90, flex: 0.7 },
+  { field: "status", headerName: "Risk", minWidth: 110, flex: 0.8 },
+];
+
+const defaultMemo = "LOT:LOT-2026A-001 / PROC:AS01 / SHIFT:A";
 
 export default function StockPage() {
   const [items, setItems] = useState<ItemResponse[]>([]);
@@ -28,20 +47,34 @@ export default function StockPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedItemId, setSelectedItemId] = useState<string>("");
   const [quantity, setQuantity] = useState<string>("1");
-  const [memo, setMemo] = useState("");
+  const [memo, setMemo] = useState(defaultMemo);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [history, setHistory] = useState<StockTransactionResponse[]>([]);
 
   const loadHistory = async (itemId: number) => {
-    const rows = await getStockHistoryByItem(itemId);
-    setHistory(rows);
+    const historyRows = await getStockHistoryByItem(itemId);
+    setHistory(historyRows);
   };
 
   const loadStocks = async () => {
     const itemList = await getItems();
     const currentStocks = await Promise.all(itemList.map((item) => getCurrentStockByItem(item.id)));
+    const stockRows = currentStocks
+      .map((stock) => ({
+        id: stock.itemId,
+        itemCode: stock.itemCode,
+        itemName: stock.itemName,
+        category: stock.unit,
+        qty: stock.currentStock,
+        safetyStock: stock.safetyStock,
+        gap: stock.currentStock - stock.safetyStock,
+        status: toStockStatus(stock.currentStock, stock.safetyStock),
+        updatedAt: "-",
+      }))
+      .sort((a, b) => a.gap - b.gap);
+
     setItems(itemList);
-    setRows(currentStocks.map(mapCurrentStockToTableRow));
+    setRows(stockRows);
     if (itemList.length === 0) {
       setSelectedItemId("");
       setHistory([]);
@@ -64,7 +97,7 @@ export default function StockPage() {
       try {
         await loadStocks();
       } catch {
-        setErrorMessage("재고 데이터를 불러오지 못했습니다.");
+        setErrorMessage("Failed to load stock data.");
       } finally {
         setIsLoading(false);
       }
@@ -82,12 +115,12 @@ export default function StockPage() {
     const parsedQuantity = Number(quantity);
 
     if (!itemId) {
-      setErrorMessage("품목을 선택해 주세요.");
+      setErrorMessage("Select item.");
       return;
     }
 
     if (!Number.isFinite(parsedQuantity) || parsedQuantity <= 0) {
-      setErrorMessage("수량은 1 이상 숫자로 입력해 주세요.");
+      setErrorMessage("Quantity must be 1 or more.");
       return;
     }
 
@@ -101,34 +134,40 @@ export default function StockPage() {
       }
       await loadStocks();
       await loadHistory(itemId);
-      setSuccessMessage(type === "IN" ? "입고가 등록되었습니다." : "출고가 등록되었습니다.");
-      setMemo("");
+      setSuccessMessage(type === "IN" ? "Stock-in created." : "Stock-out created.");
+      setMemo(defaultMemo);
       setQuantity("1");
     } catch (error) {
       if (isAxiosError(error) && error.response?.data?.message) {
         setErrorMessage(String(error.response.data.message));
       } else {
-        setErrorMessage(type === "IN" ? "입고 등록에 실패했습니다." : "출고 등록에 실패했습니다.");
+        setErrorMessage(type === "IN" ? "Failed to create stock-in." : "Failed to create stock-out.");
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const lotEntries = useMemo(() => {
+    return history
+      .filter((row) => row.memo && row.memo.includes("LOT:"))
+      .slice(0, 8);
+  }, [history]);
+
   return (
     <Stack spacing={2}>
       <Typography variant="h5" sx={{ fontWeight: 700 }}>
-        Stock Management
+        Inventory + LOT Tracking
       </Typography>
       <Card variant="outlined">
         <CardContent>
           <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
-            입출고 등록
+            Register Inventory Transaction
           </Typography>
           <Stack direction={{ xs: "column", md: "row" }} spacing={1.5}>
             <TextField
               select
-              label="품목"
+              label="Item"
               value={selectedItemId}
               onChange={(event) => {
                 const id = event.target.value;
@@ -137,7 +176,7 @@ export default function StockPage() {
                   void loadHistory(Number(id));
                 }
               }}
-              sx={{ minWidth: 220 }}
+              sx={{ minWidth: 260 }}
               size="small"
             >
               {items.map((item) => (
@@ -147,7 +186,7 @@ export default function StockPage() {
               ))}
             </TextField>
             <TextField
-              label="수량"
+              label="Qty"
               type="number"
               value={quantity}
               onChange={(event) => setQuantity(event.target.value)}
@@ -155,16 +194,10 @@ export default function StockPage() {
               inputProps={{ min: 1 }}
               sx={{ width: 120 }}
             />
-            <TextField
-              label="메모"
-              value={memo}
-              onChange={(event) => setMemo(event.target.value)}
-              size="small"
-              fullWidth
-            />
+            <TextField label="Memo (LOT/PROC/SHIFT)" value={memo} onChange={(event) => setMemo(event.target.value)} size="small" fullWidth />
             <Box sx={{ display: "flex", gap: 1 }}>
               <Button variant="contained" disabled={isSubmitting} onClick={() => void submitTransaction("IN")}>
-                입고
+                Stock-In
               </Button>
               <Button
                 variant="outlined"
@@ -172,7 +205,7 @@ export default function StockPage() {
                 disabled={isSubmitting}
                 onClick={() => void submitTransaction("OUT")}
               >
-                출고
+                Stock-Out
               </Button>
             </Box>
           </Stack>
@@ -180,22 +213,22 @@ export default function StockPage() {
       </Card>
       {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       {successMessage && <Alert severity="success">{successMessage}</Alert>}
-      {isLoading ? <CircularProgress /> : <InventoryDataGrid title="재고 현황" rows={rows} />}
+      {isLoading ? <CircularProgress /> : <InventoryDataGrid title="Current Stock Risk Board" rows={rows} columns={columns} pageSize={10} />}
       <Card variant="outlined">
         <CardContent>
           <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
-            최근 입출고 이력
+            Recent Transactions
           </Typography>
           {history.length === 0 ? (
             <Typography variant="body2" color="text.secondary">
-              선택한 품목의 입출고 이력이 없습니다.
+              No transaction history for selected item.
             </Typography>
           ) : (
             <Stack divider={<Divider flexItem />}>
               {history.map((row) => (
                 <Box key={row.id} sx={{ py: 1.2 }}>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    {row.type === "IN" ? "입고" : "출고"} {row.quantity} {row.itemName} ({row.itemCode})
+                    {row.type === "IN" ? "IN" : "OUT"} {row.quantity} {row.itemName} ({row.itemCode})
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     {formatDateTime(row.createdAt)} / {row.createdBy} / {row.memo || "-"}
@@ -206,7 +239,26 @@ export default function StockPage() {
           )}
         </CardContent>
       </Card>
+      <Card variant="outlined">
+        <CardContent>
+          <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1.5 }}>
+            LOT Tagged History
+          </Typography>
+          {lotEntries.length === 0 ? (
+            <Typography variant="body2" color="text.secondary">
+              No LOT-tagged records. Use memo pattern like `LOT:... / PROC:... / SHIFT:...`.
+            </Typography>
+          ) : (
+            <Stack spacing={1}>
+              {lotEntries.map((entry) => (
+                <Typography key={entry.id} variant="body2" color="text.secondary">
+                  [{entry.type}] {entry.itemCode} {entry.quantity} - {entry.memo}
+                </Typography>
+              ))}
+            </Stack>
+          )}
+        </CardContent>
+      </Card>
     </Stack>
   );
 }
-

@@ -5,11 +5,11 @@ import { Card, CardContent, Stack, Typography } from "@mui/material";
 type KpiCardProps = {
   title: string;
   value: string;
-  delta: string;
+  hint: string;
 };
 
-export default function KpiCard({ title, value, delta }: KpiCardProps) {
-  const isPositive = !delta.startsWith("-");
+export default function KpiCard({ title, value, hint }: KpiCardProps) {
+  const isPositive = !hint.includes("risk") && !hint.includes("delayed") && !hint.includes("low");
   return (
     <Card elevation={0} sx={{ border: "1px solid #e6e8ef" }}>
       <CardContent>
@@ -26,7 +26,7 @@ export default function KpiCard({ title, value, delta }: KpiCardProps) {
             <TrendingDownIcon fontSize="small" color="error" />
           )}
           <Typography variant="caption" color={isPositive ? "success.main" : "error.main"}>
-            {delta} since last week
+            {hint}
           </Typography>
         </Stack>
       </CardContent>

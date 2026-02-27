@@ -5,6 +5,8 @@ import { TableRow } from "../../types/table";
 type InventoryDataGridProps = {
   title: string;
   rows: TableRow[];
+  columns?: GridColDef<TableRow>[];
+  pageSize?: number;
 };
 
 const columns: GridColDef<TableRow>[] = [
@@ -26,7 +28,12 @@ const columns: GridColDef<TableRow>[] = [
   { field: "updatedAt", headerName: "Updated At", flex: 1.2, minWidth: 160 },
 ];
 
-export default function InventoryDataGrid({ title, rows }: InventoryDataGridProps) {
+export default function InventoryDataGrid({
+  title,
+  rows,
+  columns: customColumns,
+  pageSize = 5,
+}: InventoryDataGridProps) {
   return (
     <Paper elevation={0} sx={{ border: "1px solid #e6e8ef", p: 2 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>
@@ -34,12 +41,12 @@ export default function InventoryDataGrid({ title, rows }: InventoryDataGridProp
       </Typography>
       <DataGrid
         rows={rows}
-        columns={columns}
+        columns={customColumns ?? columns}
         disableRowSelectionOnClick
         pageSizeOptions={[5, 10]}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 5, page: 0 },
+            paginationModel: { pageSize, page: 0 },
           },
         }}
         sx={{
